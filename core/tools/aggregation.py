@@ -50,7 +50,7 @@ class AggregationTool:
                  collection_name_local_kb="iot_attacks_knowledge_base", # Collection cho kiến thức cục bộ 
                  embedding_model_name="all-MiniLM-L6-v2",
                  db_path_local_kb="D:/UIT 2025-2026/Hocmay/Project/IDS_Agent/ChromaDB_Knowledge/", # Đường dẫn riêng cho KB
-                 llm_model_name="gemini-1.5-flash-latest"): # Sử dụng tên model mới hơn
+                 llm_model_name="gemini-2.0-flash-"): 
         
         self.encoder = None
         self.llm_summarizer = None # LLM dùng để tóm tắt
