@@ -1,0 +1,95 @@
+[
+  {
+    "name": "data_extraction",
+    "description": "Extracts a traffic record from a CSV file based on either line number or flow ID.",
+    "parameters": {
+      "type": "OBJECT",
+      "properties": {
+        "file_path": {
+          "type": "STRING",
+          "description": "Path to the CSV file."
+        },
+        "identifier": {
+          "type": "STRING", 
+          "description": "The identifier for the record. If 'by' is 'line_number', this should be a string representation of the number (e.g., \"1\", \"230\"). If 'by' is 'flow_id', this is the flow ID string (e.g., \"XYZ123\")."
+        },
+        "by": {
+          "type": "STRING",
+          "enum": ["line_number", "flow_id"],
+          "description": "Specify 'line_number' or 'flow_id' to indicate how the 'identifier' should be interpreted."
+        }
+      },
+      "required": ["file_path", "identifier", "by"]
+    }
+  },
+  {
+    "name": "data_preprocessing",
+    "description": "Preprocess the currently loaded raw traffic data for classification. Uses internally stored raw_data.",
+    "parameters": {
+      "type": "OBJECT",
+      "properties": {}
+    }
+  },
+  {
+    "name": "classify",
+    "description": "Classify the currently preprocessed traffic features using a specified machine learning model. Uses internally stored preprocessed_data.",
+    "parameters": {
+      "type": "OBJECT",
+      "properties": {
+        "classifier_name": {
+          "type": "STRING",
+          "enum": [
+            "random_forest_ACI",
+            "svc_ACI",
+            "multi_layer_perceptrons_ACI",
+            "decision_tree_ACI",
+            "k_nearest_neighbors_ACI",
+            "logistic_regression_ACI"
+          ],
+          "description": "The specific name of the classifier model to use."
+        }
+      },
+      "required": ["classifier_name"]
+    }
+  },
+  {
+    "name": "knowledge_retrieval_tool_function",
+    "description": "Retrieves relevant knowledge about a given query from local and external sources.",
+    "parameters": {
+      "type": "OBJECT",
+      "properties": {
+        "query": {
+          "type": "STRING",
+          "description": "The search query, typically related to an attack type or security concept."
+        }
+      },
+      "required": ["query"]
+    }
+  },
+  {
+    "name": "long_term_memory_retrieval_tool_function",
+    "description": "Retrieves relevant past successful classification experiences (LTM) based on current classification results. Uses internally stored classification_results.",
+    "parameters": {
+      "type": "OBJECT",
+      "properties": {}
+    }
+  },
+  {
+    "name": "aggregation",
+    "description": "Aggregates current classification results, LTM, and external knowledge to produce a final, explained decision. Uses internally stored states.",
+    "parameters": {
+      "type": "OBJECT",
+      "properties": {
+        "line_number": {
+          "type": "NUMBER",
+          "description": "The line number of the traffic data being analyzed."
+        },
+        "reasoning_trace_summary": {
+          "type": "STRING",
+          "description": "A brief summary of the agent's reasoning steps leading up to aggregation."
+        }
+      },
+      "required": ["line_number", "reasoning_trace_summary"]
+    }
+  }
+]
