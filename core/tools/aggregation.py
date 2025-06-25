@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 load_dotenv()
 
 
-UNKNOWN_CONFIDENCE_THRESHOLD = 0.85
+UNKNOWN_CONFIDENCE_THRESHOLD = 0.65
 
 LABEL_MAP_AGGREGATION = {
     "ARP Spoofing": 0, "Benign": 1, "DNS Flood": 2, "Dictionary Attack": 3,
